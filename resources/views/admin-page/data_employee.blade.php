@@ -25,7 +25,7 @@
               <?= session()->get('failed') ?>
             </div>
           @endif
-          <div class="row justify-content-end mb-2 w-100">
+          <div class="row justify-content-end mb-2 w-100" {{ $auth_user->level_id != 1 ? 'hidden' : '' }}>
             <a href="/form-add-karyawan" class="btn float-right btn-add "><i class="fas fa-plus-square"></i> &nbsp; Data</a>
           </div>
           <table class="table table-bordered table-sm">
@@ -47,10 +47,14 @@
                       <td>{{ $row->gender == 'M' ? 'Laki-laki' : 'Perempuan' }}</td>
                       <td>{{ $row->phone }}</td>
                       <td>{{ $row->email }}</td>
-                      <td style=" text-align: center;">
-                        <a href="/form-edit-karyawan/{{$row->nik}}" class="text-warning"><i class="fas fa-edit"></i></a>
-                        &nbsp;
-                        <a href="#" onclick="delete_data(`{{$row->nik}}`, `{{$row->name}}`)" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+                      <td style=" text-align: center;" >
+                        @if ($auth_user->level_id != 1)
+                            <div class="text-danger"> <i class="fas fa-minus"></i> </div>
+                        @else
+                          <a href="/form-edit-karyawan/{{$row->nik}}" class="text-warning"><i class="fas fa-edit"></i></a>
+                          &nbsp;
+                          <a href="#" onclick="delete_data(`{{$row->nik}}`, `{{$row->name}}`)" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+                        @endif
                       </td>
                   </tr>
                 @endforeach

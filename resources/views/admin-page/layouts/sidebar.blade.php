@@ -75,7 +75,7 @@
                     </ul>
                 </li>
                 
-                <li class="nav-item ">
+                <li class="nav-item" {{ $auth_user->level_id != 1 ? 'hidden' : '' }}>
                     <a href="/manage-leave-emp" class="nav-link {{ Request::segment(1) === 'manage-leave-emp' ? 'menu-active' : '' }}">
                         <i class="nav-icon fas fa-book"></i>
                         <p>Kelola Cuti Karyawan </p>

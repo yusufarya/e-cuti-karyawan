@@ -33,7 +33,7 @@
                         <h4 class="font-weight-bold">{{ $auth_user->nip }}</h4>
                         <h4>{{ $auth_user->fullname }}</h4>
                         <hr>
-                        Pengelola Unit Pelaksana Teknis ( UPT ) yang secara  operasional merupakan penunjang sebagian tugas Disnaker Kabupaten Tangerang
+                        Pengelola unit pengajuan perizinan mulai dari Izin, Sakit dan Cuti yang secara operasional merupakan penunjang sebagian tugas pengelola pengajuan karyawan
                         <br>
                     </div>
                 </div>
