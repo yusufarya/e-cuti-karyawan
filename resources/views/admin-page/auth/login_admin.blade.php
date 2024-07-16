@@ -12,15 +12,15 @@
         <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
      
     </head>
-    <body class="d-flex align-items-center py-4 bg-white">
+    <body class="d-flex align-items-center py-3 bg-body-secondary">
 
-        <main class="row m-auto">
+        <main class="row m-auto bg-white rounded-3">
             
-            <input type="hidden" id="valid" value="<?= session()->has('success') ?>">
-            <input type="hidden" id="invalid" value="<?= session()->has('failed') ?>">
-            <section class="form-login">
+            <section class="form-login px-5 shadow">
                 <form class="mt-3" action="/login-admin" method="POST">
                     @csrf
+                    <input type="hidden" id="valid" value="<?= session()->has('success') ?>">
+                    <input type="hidden" id="invalid" value="<?= session()->has('failed') ?>">
                     <div class="row">
                         <div class="col">
                             <h1 class="h1 mb-2 pt-2 fw-bold my-color-primary">Masuk</h1>  
@@ -63,7 +63,10 @@
                     <p class="mt-5 mb-3 text-body-secondary">Pelatihan &copy; {{date('Y')}}</p>
                 </form>
             </section>
+
         </main>
+
+    </body>
 
         <div class="toast-container position-fixed top-0 end-0 p-3">
             <div id="notif-success" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -107,6 +110,4 @@
             }
 
         </script>
-
-    </body>
 </html>

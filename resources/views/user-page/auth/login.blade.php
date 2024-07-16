@@ -16,11 +16,11 @@
 
         <main class="row m-auto">
             
-            <input type="hidden" id="valid" value="<?= session()->has('success') ?>">
-            <input type="hidden" id="invalid" value="<?= session()->has('failed') ?>">
             <section class="form-login shadow px-5">
                 <form class="mt-3" action="/login" method="POST">
                     @csrf
+                    <input type="hidden" id="valid" value="<?= session()->has('success') ?>">
+                    <input type="hidden" id="invalid" value="<?= session()->has('failed') ?>">
                     <div class="row">
                         <div class="col">
                             <h1 class="h1 mb-2 pt-2 fw-bold my-color-primary">Masuk</h1>  
@@ -59,7 +59,7 @@
     
                     {{-- <div class="form-check text-start my-3"></div> --}}
                     <button class="btn my-bg-primary auth-button w-100 py-2 mt-3" type="submit">Masuk</button>
-                    <p class="mt-2 ms-1 text-sm">Belum punya akun <a href="/register"> Daftar disini.</a></p>
+                    {{-- <p class="mt-2 ms-1 text-sm">Belum punya akun <a href="/register"> Daftar disini.</a></p> --}}
                     <p class="mt-5 mb-3 text-body-secondary">Pelatihan &copy; {{date('Y')}}</p>
                 </form>
             </section>
