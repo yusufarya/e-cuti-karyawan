@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Grade;
-use App\Models\SubDistrict;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -41,17 +40,15 @@ class Employee extends Authenticatable
         'updated_by',
     ];
     
-    public function sub_districts(): BelongsTo
-    {
-        return $this->belongsTo(SubDistrict::class, 'sub_district', 'id');
-    }
+    // public function sub_districts(): BelongsTo
+    // {
+    //     return $this->belongsTo(SubDistrict::class, 'sub_district', 'id');
+    // }
 
     public function getUserProfile() {
         $nik = auth('employee')->user()->nik;
         $data = DB::table('employees')
-            ->select('employees.*','sub_districts.name as sub_district_name', 'villages.name as village_name')
-            ->leftJoin('sub_districts', 'employees.sub_district', '=', 'sub_districts.id')
-            ->leftJoin('villages', 'employees.village', '=', 'villages.id')
+            ->select('employees.*')
             ->where(['nik' => $nik])
             ->first();
         return $data;
@@ -59,9 +56,7 @@ class Employee extends Authenticatable
 
     public function getUserProfileByNumber($nik) {
         $data = DB::table('employees')
-            ->select('employees.*','sub_districts.name as sub_district_name', 'villages.name as village_name')
-            ->leftJoin('sub_districts', 'employees.sub_district', '=', 'sub_districts.id')
-            ->leftJoin('villages', 'employees.village', '=', 'villages.id')
+            ->select('employees.*')
             ->where(['nik' => $nik])
             ->first();
         return $data;
