@@ -19,7 +19,7 @@ class EmployeesController extends Controller
         $dataEmployee = Employee::orderBy('created_at', 'desc')->get(); 
         return view('admin-page.'.$filename, [
             'script' => $filename_script,
-            'title' => 'Data Employee',
+            'title' => 'Data Karyawan',
             'auth_user' => $data,
             'dataEmployee' => $dataEmployee
         ]);
@@ -34,7 +34,7 @@ class EmployeesController extends Controller
         $user_level = UserLevel::get();  
         return view('admin-page.'.$filename, [
             'script' => $filename_script,
-            'title' => 'Tambah Data Employee',
+            'title' => 'Tambah Data Karyawan',
             'auth_user' => $data,
             'level_id' => $user_level
         ]);
@@ -80,7 +80,7 @@ class EmployeesController extends Controller
         $user_level = UserLevel::get();  
         return view('admin-page.'.$filename, [
             'script' => $filename_script,
-            'title' => 'Edit Data Employee',
+            'title' => 'Edit Data Karyawan',
             'auth_user' => $data,
             'data_employee' => $data_employee,
             'level' => $user_level
