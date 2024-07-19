@@ -6,7 +6,7 @@
         <meta name="description" content="E-Cuti, Pengajuan Cuti Kabupaten Tangerang">
         <meta name="author" content="Yusuf Aryadilla and Bootstrap contributors">
         <meta name="generator" content="E-CUTI">
-        <title>Register - Page · E-Cuti</title>
+        <title>Login - Page · E-Cuti</title>
       
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
@@ -60,7 +60,7 @@
                     {{-- <div class="form-check text-start my-3"></div> --}}
                     <button class="btn my-bg-primary auth-button w-100 py-2 mt-3" type="submit">Masuk</button>
                     {{-- <p class="mt-2 ms-1 text-sm">Belum punya akun <a href="/register-admin"> Daftar disini.</a></p> --}}
-                    <p class="mt-5 mb-3 text-body-secondary">Pelatihan &copy; {{date('Y')}}</p>
+                    <p class="mt-5 mb-3 text-body-secondary">E-Cuti &copy; {{date('Y')}}</p>
                 </form>
             </section>
 

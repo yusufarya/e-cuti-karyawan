@@ -84,7 +84,7 @@ $date_of_birth = $auth_user->date_of_birth ? date('d, M Y', strtotime($auth_user
         </div>
     </div>
 
-    <span>Untuk dapat melakukan pendaftaran pelatihan silahkan lengkapi data di atas. <a href="/update-profile">Lengkapi data.</a></span>
+    <span>Untuk dapat melakukan pengajuan silahkan lengkapi data di atas. <a href="/update-profile">Lengkapi data.</a></span>
 </div>
 
 @endsection

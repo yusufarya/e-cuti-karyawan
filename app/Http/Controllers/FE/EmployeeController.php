@@ -100,24 +100,6 @@ class EmployeeController extends Controller
         return $numberFix;
     }
 
-    // Pelatihan saya //
-    function wishlist() {
-        
-        $filename = 'wishlist';
-        $filename_script = getContentScript(false, $filename);
-
-        $number = Auth::guard('employee')->user()->number;
-
-        $registrant = new Registrant;
-        $result = $registrant->getWishlist($number);
-        // dd($result);
-        return view('user-page.'.$filename, [
-            'script' => $filename_script,
-            'title' => 'Daftar Pelatihan saya',
-            'wishlist' => $result
-        ]);
-    }
-
     // USER PROFILE - PARTICIPANT (PESERTA) //
 
     function profile() {

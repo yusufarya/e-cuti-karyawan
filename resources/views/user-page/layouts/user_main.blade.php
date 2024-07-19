@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pelatihan - E-CUTI </title>
+    <title>Pengajuan - E-CUTI </title>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mystyle.css') }}">
     <!-- Font Awesome -->

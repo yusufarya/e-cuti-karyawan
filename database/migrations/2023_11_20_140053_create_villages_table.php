@@ -9,16 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('villages', function (Blueprint $table) {
-            $table->id();
-            $table->char('sub_district_id')->nullable(false);
-            // $table->foreign('sub_district_id')->on('sub_districts')->references('id');
-            $table->string('name');
-            // $table->timestamps();
-        });
-    }
+    // public function up(): void
+    // {
+    //     Schema::create('villages', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->char('sub_district_id')->nullable(false);
+    //         // $table->foreign('sub_district_id')->on('sub_districts')->references('id');
+    //         $table->string('name');
+    //         // $table->timestamps();
+    //     });
+    // }
 
     /**
      * Reverse the migrations.

@@ -24,15 +24,16 @@ class SubmissionExport implements FromCollection, WithHeadings, ShouldAutoSize, 
     public function headings(): array
     {
         return [
-            'NIK',
+            'NIK Karyawan',
             'Nama Lengkap',
             'Jenis Kelamin',
-            'Tempat Tanggal Lahir',
-            'No. Telp',
-            'Alamat Lengkap',
-            'Email',
-            'Agama',
-            'Status',
+            'Jenis Pengajuan',
+            'Dari Tanggal',
+            'Sampai Tanggal',
+            'Persetujuan 1',
+            'Disetujui Oleh',
+            'Persetujuan 2',
+            'Disetujui Oleh',
         ];
     }
 
@@ -46,16 +47,11 @@ class SubmissionExport implements FromCollection, WithHeadings, ShouldAutoSize, 
                     'size' => 12,
                 ],
             ],
-            'L' => [
+            'D' => [
                 'alignment' => [
                     'horizontal' => Alignment::HORIZONTAL_CENTER,
                     'vertical' => Alignment::VERTICAL_CENTER,
                     // 'wrapText' => true,
-                ],
-            ],
-            'K' => [
-                'alignment' => [
-                    'horizontal' => Alignment::HORIZONTAL_LEFT,
                 ],
             ]
 
@@ -82,11 +78,22 @@ class SubmissionExport implements FromCollection, WithHeadings, ShouldAutoSize, 
         }
 
         $data = DB::table('employees')
-        ->select('employees.nik', 'employees.fullname', 'emp_leaves.start_date', 'emp_leaves.end_date', 'emp_leaves.leave_type', 'emp_leaves.approved1', 'emp_leaves.approved1_by', 'emp_leaves.approved2', 'emp_leaves.approved2_by',
+        ->select('employees.nik', 'employees.fullname', 
         DB::raw('(CASE WHEN employees.gender = "M" THEN "Laki-laki" ELSE "Perempuan" END) AS gender'),
-        DB::raw("CONCAT(employees.place_of_birth, \" - \", DATE_FORMAT(employees.date_of_birth, '%d/%m/%Y')) AS ttl"),
-        DB::raw("CONCAT(\"'\", employees.phone) AS phone"),
-        'employees.address', 'employees.email', 'employees.religion','employees.material_status'
+        'emp_leaves.leave_type', 'emp_leaves.start_date', 'emp_leaves.end_date', 
+        DB::raw('(CASE WHEN emp_leaves.approved1 = "Y" THEN "Pengajuan Disetujui" 
+            WHEN emp_leaves.approved1 = "X" THEN "Menunggu Persetujuan" 
+            ELSE "Pengajuan Ditolak" 
+        END) AS approved1'), 
+        'emp_leaves.approved1_by',
+        DB::raw('(CASE 
+            WHEN emp_leaves.approved1 = "N" THEN "-"
+            WHEN emp_leaves.approved2 = "X" THEN "Menunggu Persetujuan"
+            WHEN emp_leaves.approved2 = "Y" THEN "Pengajuan Disetujui"
+            WHEN emp_leaves.approved2 = "N" THEN "Pengajuan Ditolak"
+            ELSE "-"
+        END) AS approved2'),
+        'emp_leaves.approved2_by'
         )
         ->join('emp_leaves', 'employees.nik', '=', 'emp_leaves.emp_nik')
         ->where($where)

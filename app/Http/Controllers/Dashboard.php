@@ -18,12 +18,14 @@ class Dashboard extends Controller
     
     function index() {
     
-        $registrant_group = DB::table('employees')
-                                ->select('sub_districts.name AS sub_district_name', DB::raw('count(employees.sub_district) as count'))
-                                ->join('sub_districts', 'sub_districts.id', '=', 'employees.sub_district')
-                                ->groupBy('sub_districts.name')
+        $registrant_group = DB::table('emp_leaves')
+                                ->select('emp_leaves.id', 'emp_leaves.leave_type','emp_leaves.created_at', 'employees.fullname' 
+                                )
+                                ->join('employees', 'employees.nik', '=', 'emp_leaves.emp_nik')
+                                ->orderBy('emp_leaves.id', 'desc')
+                                ->limit(3)
                                 ->get();
-
+        
         $countEmployee = Employee::count();
 
         $cur_route = Route::current()->uri();
@@ -32,7 +34,10 @@ class Dashboard extends Controller
             'title' => 'Dashboard',
             'cur_page' => $cur_route,
             'auth_user' => $data,
-            'pendaftarBaru' => DB::table('employees')->count(),
+            'total_emp' => DB::table('employees')->count(),
+            'total_cuti' => DB::table('emp_leaves')->where('leave_type', 'CUTI')->count(),
+            'total_izin' => DB::table('emp_leaves')->where('leave_type', 'IZIN')->count(),
+            'total_sakit' => DB::table('emp_leaves')->where('leave_type', 'SAKIT')->count(),
             'registrant_group' => $registrant_group,
             'countEmployee' => $countEmployee,
         ]);

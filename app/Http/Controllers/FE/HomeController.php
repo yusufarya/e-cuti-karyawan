@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FE;
 
 use App\Models\EmpLeave;
 use Illuminate\Http\Request;
+use App\Models\CalculateEmpLeave;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,10 +20,12 @@ class HomeController extends Controller
 
     function submission() {
         // $submission = Post::with('picturePost')->orderBy('id', 'DESC')->get();
+        $dataCuti = CalculateEmpLeave::where('emp_nik', auth()->guard('employee')->user()->nik)->first();
         
         return view('user-page/submissions', [
             'title' => 'Pengajuan',
             'submissions' => [],
+            'dataCuti' => $dataCuti,
             'brand_name' => 'E-CUTI'
         ]);
     }

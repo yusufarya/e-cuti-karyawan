@@ -114,7 +114,7 @@
             
                         <button class="btn my-bg-primary auth-button w-100 py-2 mt-2" type="submit">Register</button>
                         <p class="mt-2 ml-2 text-sm">Sudah punya akun ? <a href="/login-admin"> Masuk disini.</a></p>
-                        <p class="mt-5 mb-3 text-body-secondary">Pelatihan &copy; {{date('Y')}}</p>
+                        <p class="mt-5 mb-3 text-body-secondary">E-Cuti &copy; {{date('Y')}}</p>
                     </form>
                 </section>
             </div>

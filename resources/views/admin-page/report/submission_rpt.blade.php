@@ -68,7 +68,7 @@
         <h1> {{ $title }} </h1>
         <div class="row-export">
             <div class="icon-export">
-                <a href="/export_registrant">
+                <a href="/export_submission">
                     <img src="{{ asset('img/excel.png') }}" alt="excel" style="height: 40px;">
                     <label for="print" style="display : block; font-size: 12px; margin-left: 4px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">export</label>
                     <br>
@@ -107,10 +107,10 @@
                         @php
                             if($item->approved1 == 'X') {
                                 $status1 = 'Menunggu Persetujuan';
-                                $color = "bg-success";
+                                $color = "bg-info";
                             } else if($item->approved1 == 'Y') {
                                 $status1 = 'Pengajuan Disetujui';
-                                $color = "bg-primary";
+                                $color = "bg-success";
                             } else if($item->approved1 == 'N') {
                                 $status1 = 'Pengajuan Ditolak';
                                 $color = "bg-danger";
@@ -125,10 +125,10 @@
                             } else {
                                 if($item->approved2 == 'X') {
                                     $status2 = 'Menunggu Persetujuan';
-                                    $color = "bg-success";
+                                    $color = "bg-info";
                                 } else if($item->approved2 == 'Y') {
                                     $status2 = 'Pengajuan Disetujui';
-                                    $color = "bg-primary";
+                                    $color = "bg-success";
                                 } else if($item->approved2 == 'N') {
                                     $status2 = 'Pengajuan Ditolak';
                                     $color = "bg-danger";

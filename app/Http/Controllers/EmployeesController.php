@@ -16,7 +16,7 @@ class EmployeesController extends Controller
         $filename_script = getContentScript(true, $filename);
 
         $data = Auth::guard('admin')->user();  
-        $dataEmployee = Employee::get();  
+        $dataEmployee = Employee::orderBy('created_at', 'desc')->get(); 
         return view('admin-page.'.$filename, [
             'script' => $filename_script,
             'title' => 'Data Employee',

@@ -213,35 +213,6 @@ class AdminController extends Controller
         ]);
     }
 
-    function deleteRegistrant(Request $request, string $nip) {
-        $checkDataExist = Registrant::where("participant_nip", $nip)->count();
-        if($checkDataExist > 0) {
-            $request->session()->flash('message', 'Akun tidak dapat dihapus, karna telah mengikuti pelatihan');
-            return redirect('/registrant-data');
-        }
-        $data = Participant::find($nip);
-        // dd($data);
-        if($data->id_card) {
-            Storage::delete($data->id_card);
-        }
-        if($data->ak1) {
-            Storage::delete($data->ak1);
-        }
-        if($data->ijazah) {
-            Storage::delete($data->ijazah);
-        }
-        if($data->image) {
-            Storage::delete($data->image);
-        }
-        $result = $data->delete();
-        if($result) {
-            $request->session()->flash('success', 'Data berhasil dihapus');
-        } else {
-            $request->session()->flash('failed', 'Proses gagal, Hubungi administrator');
-        }
-        return redirect('/registrant-data');
-    }
-
     function resetPassword(Request $request, string $nip) {
         
         $password = Hash::make($request->password);
@@ -254,46 +225,6 @@ class AdminController extends Controller
             $request->session()->flash('failed', 'Proses gagal, Hubungi administrator');
         }
         return redirect('/detail-participant/'.$nip);
-    }
-
-    function registrant(Request $request) {
-        $filename = 'registrant';
-        $filename_script = getContentScript(true, $filename);
-        
-        $status_approve = $request->status ? $request->status : NULL;
-
-        $data = Auth::guard('admin')->user();  
-        $registrant = new Registrant;
-        $result = $registrant->getRegistrants($status_approve,$request->fullname);
-        // dd($result);
-        return view('admin-page.'.$filename, [
-            'status' => $status_approve,
-            'search_name' => $request->fullname,
-            'script' => $filename_script,
-            'title' => 'Data Pendaftar Pelatihan',
-            'auth_user' => $data,
-            'participant' => $result
-        ]);
-    }
-    
-    function participantPassed(Request $request) {
-        $filename = 'participant_passed';
-        $filename_script = getContentScript(true, $filename);
-        
-        $status_passed = $request->passed ? $request->passed : "X";
-
-        $data = Auth::guard('admin')->user();  
-        $registrant = new Registrant;
-        $result = $registrant->getParticipantPassed($status_passed, $request->fullname);
-        // dd($result);
-        return view('admin-page.'.$filename, [
-            'passed' => $status_passed,
-            'search_name' => $request->fullname,
-            'script' => $filename_script,
-            'title' => 'Data Kelulusan Pelatihan',
-            'auth_user' => $data,
-            'participant' => $result
-        ]);
     }
     
 }
