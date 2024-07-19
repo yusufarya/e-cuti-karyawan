@@ -47,7 +47,7 @@
                 <span class="badge badge-warning navbar-badge">{{ $countNotif }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">{{ $countNotif }} Pendaftar Calon Peserta</span>
+                <span class="dropdown-item dropdown-header">{{ $countNotif }} Pengajuan Butuh Persetujuan</span>
                 @foreach ($getNotif as $item)
                     <div class="dropdown-divider"></div>
                     <a href="/detail-submission-em/{{$item->emp_nik}}" class="dropdown-item">

@@ -41,12 +41,10 @@ class EmployeesController extends Controller
     }
 
     function storeEmployee(Request $request) {
-        // dd($request);
         $validatedData = $request->validate([
             'fullname'      => 'required|max:50',
             'username'      => 'required|max:30|unique:users',
             'gender'        => 'required',
-            // 'level_id'        => 'required',
             'place_of_birth'    => 'required|max:40',
             'date_of_birth'     => 'required',
             'phone'       => 'required|max:15',
@@ -54,19 +52,15 @@ class EmployeesController extends Controller
             'password'      => 'required|min:6|max:255',
             'images'     => 'image|file|max:1024',
         ]);
-
         if($request->file('images')) {
             $validatedData['images'] = $request->file('images')->store('profile-images');
         }
-        
         $validatedData['nik'] = getLasNumberEmp();
         $validatedData['address'] = $request['address'];
         $validatedData['created_at'] = date('Y-m-d H:i:s');
         $validatedData['created_by'] = Auth::guard('admin')->user()->username;
         $validatedData['password'] = Hash::make($validatedData['password']);
-        // $validatedData['level_id'] = $validatedData['level_id'];
         $validatedData['is_active'] = $request['is_active'] ? "Y" : "N";
-        // dd($validatedData);
         $result = Employee::create($validatedData);
         if($result) {
             $request->session()->flash('success', 'Akun berhasil dibuat');
@@ -75,7 +69,6 @@ class EmployeesController extends Controller
             $request->session()->flash('failed', 'Proses gagal, Hubungi administrator');
             return redirect('/form-add-karyawan');
         }
-        
     }
 
     function editFormEmployee($nik) {

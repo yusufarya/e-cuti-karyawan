@@ -25,7 +25,7 @@ $date_of_birth = $auth_user->date_of_birth ? date('d, M Y', strtotime($auth_user
             
             <table class="table table-info">
                 <tr>
-                    <th style="width: 30%;">Nomor Peserta</th>
+                    <th style="width: 30%;">Nik Karyawan</th>
                     <td><b> : &nbsp; {{ $auth_user->nik }}</b></td>
                 </tr>
                 <tr>
