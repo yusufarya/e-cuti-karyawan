@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Auth;
 
 class GeneralController extends Controller {
 
-    function getVillages(Request $request) {
-        $data = Village::where(['sub_district_id' => $request->sub_district_id])->get();
-        echo json_encode($data);
-    }
-    
+    // function getVillages(Request $request) {
+    //     $data = Village::where(['sub_district_id' => $request->sub_district_id])->get();
+    //     echo json_encode($data);
+    // }
+
     function getTrainings(Request $request) {
         $data = Training::where(['category_id' => $request->category_id])->get();
         echo json_encode($data);
     }
-    
+
     function getRegistrant(Request $request) {
         $result = Registrant::where(['training_id' => $request->training_id])->get();
         echo json_encode($result);
@@ -32,16 +32,16 @@ class GeneralController extends Controller {
 
         $data = Auth::guard('admin')->user();
         if($data->level_id == 1) {
-            $admin = User::with('user_level')->get();  
+            $admin = User::with('user_level')->get();
         } else if($data->level_id == 2) {
-            $admin = User::with('user_level')->where('level_id', 2)->get();  
+            $admin = User::with('user_level')->where('level_id', 2)->get();
         }
 
         $count = CalculateEmpLeave::where('year', date('Y'))->get()->count();
         $getEmp = Employee::get();
         foreach ($getEmp as $emp) {
             $countLeave = CalculateEmpLeave::where(['year' => date('Y'), 'emp_nik' => $emp->nik])->get()->count();
-            
+
             if($count == 0 OR $countLeave == 0) {
                 $data = new CalculateEmpLeave;
                 $data->emp_nik = $emp->nik;
@@ -54,7 +54,7 @@ class GeneralController extends Controller {
                 $data->save();
             }
         }
-        
+
         $getData = CalculateEmpLeave::with('employee')->where('year', date('Y'))->get();
 
         return view('admin-page.'.$filename, [
@@ -88,7 +88,7 @@ class GeneralController extends Controller {
 
         $admin = Auth::guard('admin')->user();
         $employee = Employee::get();
-        
+
         return view('admin-page.'.$filename, [
             'script' => $filename_script,
             'title' => 'Laporan Pengajuan',
@@ -99,7 +99,7 @@ class GeneralController extends Controller {
 
     // PENGAJUAN (REPORT SUBMISSION)
     function submissionRpt(Request $request) {
-        
+
         if($request->fullname) {
             if($request->session()->get('fullname') != $request->fullname) {
                 session()->forget('fullname');
@@ -108,7 +108,7 @@ class GeneralController extends Controller {
         } else {
             session()->forget('fullname');
         }
-        
+
         if($request->gender) {
             if($request->session()->get('gender') != $request->gender) {
                 session()->forget('gender');
@@ -117,7 +117,7 @@ class GeneralController extends Controller {
         } else {
             session()->forget('gender');
         }
-        
+
         if($request->sub_district) {
             if($request->session()->get('sub_district') != $request->sub_district) {
                 session()->forget('sub_district');
@@ -126,7 +126,7 @@ class GeneralController extends Controller {
         } else {
             session()->forget('sub_district');
         }
-        
+
         if($request->year) {
             if($request->session()->get('year') != $request->year) {
                 session()->forget('year');
@@ -141,7 +141,7 @@ class GeneralController extends Controller {
 
     function openSubmissionRpt(Request $request) {
         $where = ['employees.is_active' => 'Y'];
-        
+
         if($request->session()->get('fullname')) {
             $where['employees.nik'] = $request->session()->get('fullname')[0];
         }
@@ -155,7 +155,7 @@ class GeneralController extends Controller {
         }
 
         // dd($where);
-        
+
         $data = DB::table('employees')
             ->select('employees.*', 'emp_leaves.start_date', 'emp_leaves.end_date', 'emp_leaves.leave_type', 'emp_leaves.approved1', 'emp_leaves.approved1_by', 'emp_leaves.approved2', 'emp_leaves.approved2_by')
             ->join('emp_leaves', 'employees.nik', '=', 'emp_leaves.emp_nik')
@@ -168,7 +168,7 @@ class GeneralController extends Controller {
             ->where($where)
             ->where('employees.created_at', 'LIKE', '%' . $year . '%')
             ->count();
-            
+
         return view('admin-page.report.submission_rpt', [
             'title' => 'Laporan Pengajuan',
             'data' => $data,
