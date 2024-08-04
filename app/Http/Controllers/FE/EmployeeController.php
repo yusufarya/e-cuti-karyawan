@@ -21,7 +21,7 @@ class EmployeeController extends Controller
     }
 
     public function store(Request $request) {
-        
+
         $validatedData = $request->validate([
             'fullname'      => 'required|max:90',
             'username'      => 'required|max:30|unique:employees',
@@ -31,7 +31,7 @@ class EmployeeController extends Controller
             'password'      => 'required|confirmed|min:6|max:255',
             'password_confirmation' => 'required|min:6|max:255'
         ]);
-        
+
         $validatedData['fullname'] = ucwords($validatedData['fullname']);
         $validatedData['number'] = $this->getLasNumber();
         $validatedData['created_at'] = date('Y-m-d H:i:s');
@@ -57,23 +57,23 @@ class EmployeeController extends Controller
     }
 
     public function loginValidation(Request $request) {
-        
+
         $credentials = $request->validate([
             'email'  => 'required',
             'password'  => 'required'
         ]);
         // dd($credentials);
         $resultUser = Employee::where('email', $credentials['email'])->count();
-        
+
         if(!$resultUser) {
             $request->session()->flash('failed', 'Akun tidak terdaftar.');
             return redirect('/login');
         }
         // dd(auth('employee'));
         if (auth('employee')->attempt($credentials)) {
-        
+
             $isActive = Auth::guard('employee')->user()->is_active == "Y";
-            if ($isActive == true) { 
+            if ($isActive == true) {
                 return redirect()->intended('/home');
             } else {
                 Auth::guard('employee')->logout();
@@ -86,7 +86,7 @@ class EmployeeController extends Controller
     }
 
     function getLasNumber() {
-        
+
         $lastNumber = Employee::max('number');
 
         if($lastNumber) {
@@ -105,11 +105,11 @@ class EmployeeController extends Controller
     function profile() {
         $filename = 'profile';
         $filename_script = getContentScript(false, $filename);
-        
+
         if(!auth('employee')->user()) {
             return redirect('/login');
         }
-        
+
         $employee = new Employee;
         $data = $employee->getUserProfile();
 
@@ -125,14 +125,14 @@ class EmployeeController extends Controller
         $filename_script = getContentScript(false, $filename);
 
         $nik = Auth::guard('employee')->user()->nik;
-        $data = Employee::where('nik', $nik)->first();  
-        
-        $subDistrict = SubDistrict::get();
+        $data = Employee::where('nik', $nik)->first();
+
+        // $subDistrict = SubDistrict::get();
         return view('user-page.'.$filename, [
             'script' => $filename_script,
             'title' => 'Profil Saya',
             'auth_user' => $data,
-            'subDistrict' => $subDistrict
+            // 'subDistrict' => $subDistrict
         ]);
     }
 
@@ -170,7 +170,7 @@ class EmployeeController extends Controller
         }
 
         $getData = Employee::find($nik);
-        
+
         if($request->file('image')) {
             $validatedData['image'] = $request->file('image')->store('profile-images');
             $is_valid_image = true;
@@ -184,7 +184,7 @@ class EmployeeController extends Controller
         if(!$is_valid_image) {
             return redirect('/update-profile');
         }
-        
+
         if($request->file('image')) {
             if($validatedData['image'] && $getData->image) {
                 Storage::delete($getData->image);
@@ -214,7 +214,7 @@ class EmployeeController extends Controller
     // LOGOUT PARTICIPANT //
     function logout(Request $request) {
         Auth::guard('employee')->logout();
-        
+
         $request->session()->flash('success', 'Anda berhasil logout');
         return redirect('/login');
     }
