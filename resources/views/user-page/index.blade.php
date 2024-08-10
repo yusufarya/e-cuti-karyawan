@@ -31,7 +31,7 @@
 @section('header-pages')
 
 <div class="banner">
-  
+
   <div id="carouselExampleIndicators" class="carousel slide">
       {{-- <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -67,7 +67,7 @@
       <div class="mt-3">
         <span style="font-size: 26px;"><b>PROFILE {{$brand_name}}</b></span>
         <br>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, consectetur eligendi nesciunt nam dolores odit accusantium minus mollitia, facilis voluptatum blanditiis totam, perspiciatis delectus esse provident tempore? Magni, incidunt nesciunt.</p>
+        {{-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, consectetur eligendi nesciunt nam dolores odit accusantium minus mollitia, facilis voluptatum blanditiis totam, perspiciatis delectus esse provident tempore? Magni, incidunt nesciunt.</p> --}}
       </div>
     </div>
   </div>
