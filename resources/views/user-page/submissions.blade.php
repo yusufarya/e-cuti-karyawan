@@ -1,4 +1,3 @@
-
 @extends('user-page.layouts.user_main')
 
 @php
@@ -99,9 +98,9 @@
       </div>
 
       <div class="col-lg-6 col-md-6 my-2">
-        <label for="attachment">Lapiran</label>
-        <input type="file" class="form-control @error('file')is-invalid @enderror" name="attachment" id="attachment" {{ $tersisa <= 0 ? 'disabled' : ''}}>
-        @error('file')
+        <label for="attachment">Lampiran</label>
+        <input type="file" class="form-control @error('dile')is-invalid @enderror" name="attachment" id="attachment" {{ $tersisa <= 0 ? 'disabled' : ''}}>
+        @error('dile')
         <small class="invalid-feedback">
             Tipe {{ $message }}
         </small>
@@ -118,17 +117,16 @@
 
 </div>
 
-@endsection
-
-
 <script>
-    document.getElementById('leave-form').addEventListener('submit', function(event) {
-      const startDate = document.getElementById('start_date').value;
-      const endDate = document.getElementById('end_date').value;
+  document.getElementById('leave-form').addEventListener('submit', function(event) {
+    const startDate = document.getElementById('start_date').value;
+    const endDate = document.getElementById('end_date').value;
 
-      if (new Date(endDate) < new Date(startDate)) {
-        event.preventDefault(); // Prevent form submission
-        alert('Tanggal akhir tidak boleh lebih awal dari tanggal mulai.');
-      }
-    });
+    if (new Date(endDate) < new Date(startDate)) {
+      event.preventDefault(); // Prevent form submission
+      alert('Tanggal akhir tidak boleh lebih awal dari tanggal mulai.');
+    }
+  });
 </script>
+
+@endsection
