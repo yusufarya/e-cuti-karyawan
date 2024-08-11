@@ -19,7 +19,7 @@
 
 <div class="explain-product my-4 px-3">
 
-  <form action="/submission" method="POST" enctype="multipart/form-data">
+  <form action="/submission" method="POST" enctype="multipart/form-data" id="leave-form">
     @csrf
     <div class="row shadow py-4 px-5">
 
