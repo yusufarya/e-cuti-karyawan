@@ -6,7 +6,7 @@
     $total_cuti = $dataCuti->total;
     $cuti_digunakan = $dataCuti->used;
     $tersisa = $total_cuti - $cuti_digunakan;
-    $persentase_digunakan = ($cuti_digunakan / $total_cuti) * 100;    
+    $persentase_digunakan = ($cuti_digunakan / $total_cuti) * 100;
   } else {
     $total_cuti = 0;
     $cuti_digunakan = 0;
@@ -14,15 +14,15 @@
     $persentase_digunakan = 0;
   }
 @endphp
-  
+
 @section('content-pages')
 
 <div class="explain-product my-4 px-3">
-  
+
   <form action="/submission" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="row shadow py-4 px-5">
-      
+
       <div class="heading">
         <div class="row">
           <div class="progress">
@@ -37,7 +37,7 @@
 
       @if ($tersisa <= 0)
       @endif
-      
+
       @if ($dataCuti == null)
       <div class="mt-2">
         <div class="alert alert-danger py-2 text-center">Anda tidak dapat membuat pengajuan, karna belum memiliki jatah cuti</div>
@@ -47,7 +47,7 @@
         <div class="alert alert-danger py-2 text-center">Anda tidak dapat membuat pengajuan, karna sisa cuti anda telah habis</div>
       </div>
       @endif
-  
+
       <div class="col-lg-6 col-md-6 my-2">
         <label for="name">Nama Lengkap</label>
         <input type="text" readonly name="name" id="name" class="form-control" value="{{ auth()->guard('employee')->user()->fullname }}" {{ $tersisa <= 0 ? 'disabled' : ''}} >
@@ -66,9 +66,9 @@
             Tipe {{ $message }}
         </small>
         @enderror
-        
+
       </div>
-  
+
       <div class="col-lg-6 col-md-6 my-2">
         <label for="start_date">Tanggal</label>
         <input type="date" name="start_date" id="start_date" class="form-control @error('start_date')is-invalid @enderror" value="{{ old('start_date') }}" {{ $tersisa <= 0 ? 'disabled' : ''}}>
@@ -87,7 +87,7 @@
         </small>
         @enderror
       </div>
-  
+
       <div class="col-lg-6 col-md-6 my-2">
         <label for="reason">Alasan</label>
         <textarea class="form-control @error('reason')is-invalid @enderror" name="reason" id="reason" {{ $tersisa <= 0 ? 'disabled' : ''}}>{{ old('reason') }}</textarea>
@@ -100,22 +100,35 @@
 
       <div class="col-lg-6 col-md-6 my-2">
         <label for="attachment">Lapiran</label>
-        <input type="file" class="form-control @error('dile')is-invalid @enderror" name="attachment" id="attachment" {{ $tersisa <= 0 ? 'disabled' : ''}}>
-        @error('dile')
+        <input type="file" class="form-control @error('file')is-invalid @enderror" name="attachment" id="attachment" {{ $tersisa <= 0 ? 'disabled' : ''}}>
+        @error('file')
         <small class="invalid-feedback">
             Tipe {{ $message }}
         </small>
         @enderror
       </div>
-  
+
       <div class="col-lg-12 col-md-12 my-2">
         <button type="submit" class="btn btn-success" {{ $tersisa <= 0 ? 'disabled' : ''}}>Submit</button>
       </div>
 
     </div>
-      
+
   </form>
-  
+
 </div>
 
 @endsection
+
+
+<script>
+    document.getElementById('leave-form').addEventListener('submit', function(event) {
+      const startDate = document.getElementById('start_date').value;
+      const endDate = document.getElementById('end_date').value;
+
+      if (new Date(endDate) < new Date(startDate)) {
+        event.preventDefault(); // Prevent form submission
+        alert('Tanggal akhir tidak boleh lebih awal dari tanggal mulai.');
+      }
+    });
+</script>
