@@ -2,7 +2,7 @@
 @extends('user-page.layouts.user_main')
 
 @section('content-pages')
-<?php 
+<?php
 // dd($auth_user->date_of_birth);
 $date_of_birth = $auth_user->date_of_birth ? date('d, M Y', strtotime($auth_user->date_of_birth)) : '-- / -- / ----';
 ?>
@@ -22,7 +22,7 @@ $date_of_birth = $auth_user->date_of_birth ? date('d, M Y', strtotime($auth_user
         </div>
         <div class="col-1"></div>
         <div class="col-lg-8">
-            
+
             <table class="table table-info">
                 <tr>
                     <th style="width: 30%;">Nik Karyawan</th>
@@ -40,11 +40,11 @@ $date_of_birth = $auth_user->date_of_birth ? date('d, M Y', strtotime($auth_user
                     <th style="width: 30%;">No. Telp</th>
                     <td><b> : &nbsp; {{ $auth_user->phone }}</b></td>
                 </tr>
-                
+
                 <tr>
                     <th style="width: 30%;">Tempat Tanggal Lahir</th>
                     <td>
-                        <b> : &nbsp; 
+                        <b> : &nbsp;
                         {{ $auth_user->place_of_birth.', '. $date_of_birth }}
                         </b>
                     </td>
@@ -84,7 +84,7 @@ $date_of_birth = $auth_user->date_of_birth ? date('d, M Y', strtotime($auth_user
         </div>
     </div>
 
-    <span>Untuk dapat melakukan pengajuan silahkan lengkapi data di atas. <a href="/update-profile">Lengkapi data.</a></span>
+    {{-- <span>Untuk dapat melakukan pengajuan silahkan lengkapi data di atas. <a href="/update-profile">Lengkapi data.</a></span> --}}
 </div>
 
 @endsection
