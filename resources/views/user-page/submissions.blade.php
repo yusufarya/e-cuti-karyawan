@@ -118,15 +118,33 @@
 </div>
 
 <script>
-  document.getElementById('leave-form').addEventListener('submit', function(event) {
-    const startDate = document.getElementById('start_date').value;
-    const endDate = document.getElementById('end_date').value;
+    var overLeave = `<?= json_encode($tersisa) ?>`;
 
-    if (new Date(endDate) < new Date(startDate)) {
-      event.preventDefault(); // Prevent form submission
-      alert('Tanggal akhir tidak boleh lebih awal dari tanggal mulai.');
-    }
-  });
+    document.getElementById('leave-form').addEventListener('submit', function(event) {
+        const startDate = document.getElementById('start_date').value;
+        const endDate = document.getElementById('end_date').value;
+
+        const leave_type = document.getElementById('leave_type').value
+
+        if(leave_type != "SAKIT") {
+            // Calculate the difference in time (in milliseconds)
+            const timeDifference = new Date(endDate) - new Date(startDate);
+            // Convert time difference from milliseconds to days
+            const dayDifference = timeDifference / (1000 * 60 * 60 * 24);
+
+            if((overLeave - dayDifference) >= 0) {
+                console.log(`Difference in days: ${dayDifference}`);
+            } else {
+                alert('Sisa cuti anda tidak mencukupi')
+            }
+
+        }
+
+        if (new Date(endDate) < new Date(startDate)) {
+        event.preventDefault(); // Prevent form submission
+        alert('Tanggal akhir tidak boleh lebih awal dari tanggal mulai.');
+        }
+    });
 </script>
 
 @endsection
