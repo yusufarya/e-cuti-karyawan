@@ -120,6 +120,35 @@
 <script>
     var overLeave = `<?= json_encode($tersisa) ?>`;
 
+    document.getElementById('start_date').addEventListener('change', function() {
+        const startDate = new Date(this.value);
+        const today = new Date();
+
+        // Set time of today to 00:00:00 to compare only dates
+        today.setHours(0, 0, 0, 0);
+
+        // Check if the selected start date is earlier than today
+        if (startDate < today) {
+            alert('Tanggal mulai tidak boleh kurang dari hari ini.');
+            this.value = ''; // Reset the input field
+        }
+    });
+
+    document.getElementById('end_date').addEventListener('change', function() {
+        const endDate = new Date(this.value);
+        const today = new Date();
+
+        // Set time of today to 00:00:00 to compare only dates
+        today.setHours(0, 0, 0, 0);
+
+        // Check if the selected start date is earlier than today
+        if (endDate < today) {
+            alert('Tanggal mulai tidak boleh kurang dari hari ini.');
+            this.value = ''; // Reset the input field
+        }
+    });
+
+
     document.getElementById('leave-form').addEventListener('submit', function(event) {
         const startDate = document.getElementById('start_date').value;
         const endDate = document.getElementById('end_date').value;
@@ -136,6 +165,8 @@
                 console.log(`Difference in days: ${dayDifference}`);
             } else {
                 alert('Sisa cuti anda tidak mencukupi')
+                event.preventDefault(); // Prevent form submission
+                return;
             }
 
         }
