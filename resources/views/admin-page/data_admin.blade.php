@@ -7,7 +7,7 @@
     <div class="row my-2">
       <div class="col-sm-6">
         <h3 class="m-0 ml-2">{{ $title}}</h3>
-      </div><!-- /.col --> 
+      </div><!-- /.col -->
     </div><!-- /.row -->
     <hr style="margin-bottom: 0">
   </div><!-- /.container-fluid -->
@@ -31,7 +31,7 @@
           <table class="table table-bordered table-sm">
               <thead>
                   <tr class="my-bg-primary text-white">
-                      <th style="width: 11%">Nomor</th>
+                      <th style="width: 11%">Nik</th>
                       <th>Nama</th>
                       <th style="width: 11%">Jenis Kelamin</th>
                       <th>Email</th>
@@ -76,7 +76,7 @@
     <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;" id="notif-failed">
         <div class="toast" style="position: absolute; top: 0; right: 0;">
           <div class="toast-header">
-            <strong class="me-auto text-white">Proses Gagal</strong> 
+            <strong class="me-auto text-white">Proses Gagal</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -87,7 +87,7 @@
         </div>
     </div>
 
-</section> 
+</section>
 
 <div class="modal fade" id="modal-detail" tabindex="-1">
   <div class="modal-dialog modal-lg">
@@ -106,9 +106,9 @@
           </div>
           <div class="col-lg-8">
             <table class="table table-striped" id="tb-detail"></table>
-          </div> 
+          </div>
         </div>
-      </div> 
+      </div>
     </div>
   </div>
 </div>
@@ -127,9 +127,9 @@
         @method('DELETE')
         <div class="modal-body p-3">
           <div class="row" id="content-delete">
-            
+
           </div>
-        </div> 
+        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
           <button type="submit" class="btn btn-primary">Ya</button>
