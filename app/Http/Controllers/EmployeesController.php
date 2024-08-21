@@ -15,8 +15,8 @@ class EmployeesController extends Controller
         $filename = 'data_employee';
         $filename_script = getContentScript(true, $filename);
 
-        $data = Auth::guard('admin')->user();  
-        $dataEmployee = Employee::orderBy('created_at', 'desc')->get(); 
+        $data = Auth::guard('admin')->user();
+        $dataEmployee = Employee::where('deleted', 'N')->orderBy('created_at', 'desc')->get();
         return view('admin-page.'.$filename, [
             'script' => $filename_script,
             'title' => 'Data Karyawan',
@@ -29,9 +29,9 @@ class EmployeesController extends Controller
         $filename = 'add_new_karyawan';
         $filename_script = getContentScript(true, $filename);
 
-        $data = Auth::guard('admin')->user();  
-        $user = User::with('user_level')->get();  
-        $user_level = UserLevel::get();  
+        $data = Auth::guard('admin')->user();
+        $user = User::with('user_level')->get();
+        $user_level = UserLevel::get();
         return view('admin-page.'.$filename, [
             'script' => $filename_script,
             'title' => 'Tambah Data Karyawan',
@@ -77,14 +77,18 @@ class EmployeesController extends Controller
 
         $data = Auth::guard('admin')->user();
         $data_employee = Employee::find($nik);
-        $user_level = UserLevel::get();  
-        return view('admin-page.'.$filename, [
-            'script' => $filename_script,
-            'title' => 'Edit Data Karyawan',
-            'auth_user' => $data,
-            'data_employee' => $data_employee,
-            'level' => $user_level
-        ]);
+        if($data_employee) {
+            $user_level = UserLevel::get();
+            return view('admin-page.'.$filename, [
+                'script' => $filename_script,
+                'title' => 'Edit Data Karyawan',
+                'auth_user' => $data,
+                'data_employee' => $data_employee,
+                'level' => $user_level
+            ]);
+        } else {
+            return redirect('dashboard');
+        }
     }
 
     function updateEmployee(Request $request) {
@@ -99,12 +103,12 @@ class EmployeesController extends Controller
             'phone'       => 'required|max:15',
             'images'     => 'image|file|max:1024',
         ]);
-        
+
         $username_exist = false;
         if($request['username1'] != $request['username']) {
             $username_exist = User::where('username', $request['username'])->first();
         }
-        
+
         if($request->file('images')) {
             $validatedData['images'] = $request->file('images')->store('profile-images');
         }
@@ -118,10 +122,10 @@ class EmployeesController extends Controller
         }
         // $validatedData['level_id'] = $validatedData['level_id'];
         $validatedData['is_active'] = $request['is_active'] ? "Y" : "N";
-        
+
         if($username_exist === false) {
             $result = Employee::where(['nik' => $validatedData['nik']])->update($validatedData);
-            
+
             if($result) {
                 $request->session()->flash('success', 'Akun berhasil dibuat');
                 return redirect('/data-karyawan');
@@ -142,13 +146,14 @@ class EmployeesController extends Controller
             $request->session()->flash('failed', 'Proses gagal, Anda tidak dapat menghapus akun anda sendiri');
             return redirect('/data-karyawan');
         }
-        $data = User::find($nik);
+        $data = Employee::where('nik', $nik);
 
-        if($data->image) {
+        $emp = $data->first();
+        if($emp->image) {
             Storage::delete($data->image);
         }
 
-        $result = $data->delete();
+        $result = $data->update(['deleted'=> 'Y']);
         if($result) {
             $request->session()->flash('success', 'Data berhasil dihapus');
         } else {

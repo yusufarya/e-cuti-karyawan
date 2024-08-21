@@ -33,7 +33,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/admin', function () {
         return redirect('/login-admin');
     });
-    
+
     Route::get('/login-admin', [AuthUser::class, 'index']);
     Route::post('/login-admin', [AuthUser::class, 'auth']);
     Route::get('/register-admin', [AuthUser::class, 'register']);
@@ -45,7 +45,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('admin')->group(function () {
     Route::get('/profile', [AdminController::class, 'index']);
     Route::get('/dashboard', [Dashboard::class, 'index']);
-    
+
     Route::resource('/posts', PostsController::class)->except('show');
 
     Route::get('/export/admin', [ExportDataController::class, 'export']);
@@ -77,9 +77,9 @@ Route::middleware('admin')->group(function () {
 
     Route::post('/acc-submission', [SubmissionDataController::class, 'acc_submission']); // terima
     Route::post('/reject-submission', [SubmissionDataController::class, 'reject_submission']); // penolakan
-    
+
     Route::put('/reset-password/{number}', [AdminController::class, 'resetPassword']); // reset password pendaftar akun
-    
+
     // REPORTING //
     Route::get('/submission-report', [GeneralController::class, 'submissionReport']);
     Route::get('/submission-rpt', [GeneralController::class, 'submissionRpt']);
@@ -92,7 +92,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/export_participant', [ExportDataController::class, 'participant']);
 
     // END REPORTING //
-    
+
     Route::post('/logout-admin', [AuthUser::class, 'logout']);
 });
 
@@ -108,7 +108,7 @@ Route::middleware('employee')->group(function () {
     Route::get('/update-profile', [EmployeeController::class, 'updateProfile']);
     Route::put('/update-profile/{number}', [EmployeeController::class, 'updateProfileData']);
     Route::get('/checkDataUser/{id}', [GeneralController::class, 'checkDataUser']);
-    
+
     Route::post('/logout', [EmployeeController::class, 'logout']);
 });
 

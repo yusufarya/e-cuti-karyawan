@@ -19,24 +19,24 @@ class AdminController extends Controller
     function index() {
         $nip = Auth::guard('admin')->user()->nip;
 
-        $data = User::with('user_level')->where(['nip' => $nip])->first();  
-        
+        $data = User::with('user_level')->where(['nip' => $nip])->first();
+
         return view('admin-page.profile', [
             'title' => 'Profile',
             'auth_user' => $data
         ]);
     }
-    
+
     function dataAdmin() {
         $filename = 'data_admin';
         $filename_script = getContentScript(true, $filename);
 
         $data = Auth::guard('admin')->user();
         if($data->level_id == 1) {
-            $admin = User::with('user_level')->get();  
+            $admin = User::with('user_level')->get();
         } else if($data->level_id == 2) {
-            $admin = User::with('user_level')->where('level_id', 2)->get();  
-        } 
+            $admin = User::with('user_level')->where('level_id', 2)->get();
+        }
 
         return view('admin-page.'.$filename, [
             'script' => $filename_script,
@@ -63,9 +63,9 @@ class AdminController extends Controller
         $filename = 'add_new_admin';
         $filename_script = getContentScript(true, $filename);
 
-        $data = Auth::guard('admin')->user();  
-        $admin = User::with('user_level')->get();  
-        $user_level = UserLevel::get();  
+        $data = Auth::guard('admin')->user();
+        $admin = User::with('user_level')->get();
+        $user_level = UserLevel::get();
         return view('admin-page.'.$filename, [
             'script' => $filename_script,
             'title' => 'Tambah Data User',
@@ -92,7 +92,7 @@ class AdminController extends Controller
         if($request->file('images')) {
             $validatedData['images'] = $request->file('images')->store('profile-images');
         }
-        
+
         $validatedData['nip'] = getLasNumberAdmin($validatedData['level_id']);
         $validatedData['address'] = $request['address'];
         $validatedData['created_at'] = date('Y-m-d H:i:s');
@@ -109,7 +109,7 @@ class AdminController extends Controller
             $request->session()->flash('failed', 'Proses gagal, Hubungi administrator');
             return redirect('/form-add-admin');
         }
-        
+
     }
 
     function editFormAdmin($nip) {
@@ -118,7 +118,7 @@ class AdminController extends Controller
 
         $data = Auth::guard('admin')->user();
         $data_admin = User::find($nip);
-        $user_level = UserLevel::get();  
+        $user_level = UserLevel::get();
         return view('admin-page.'.$filename, [
             'script' => $filename_script,
             'title' => 'Edit Data User',
@@ -129,7 +129,7 @@ class AdminController extends Controller
     }
 
     function updateAdmin(Request $request) {
-        
+
         $validatedData = $request->validate([
             'fullname'      => 'required|max:50',
             'username'      => 'required|max:30',
@@ -145,7 +145,7 @@ class AdminController extends Controller
         if($request['username1'] != $request['username']) {
             $username_exist = User::where('username', $request['username'])->first();
         }
-        
+
         if($request->file('images')) {
             $validatedData['images'] = $request->file('images')->store('profile-images');
         }
@@ -159,10 +159,10 @@ class AdminController extends Controller
         }
         $validatedData['level_id'] = $validatedData['level_id'];
         $validatedData['is_active'] = $request['is_active'] ? "Y" : "N";
-        
+
         if($username_exist === false) {
             $result = User::where(['nip' => $validatedData['nip']])->update($validatedData);
-            
+
             if($result) {
                 $request->session()->flash('success', 'Akun berhasil dibuat');
                 return redirect('/data-admin');
@@ -177,7 +177,7 @@ class AdminController extends Controller
 
     }
 
-    function deleteUser(Request $request, string $nip) {
+    function deleteAdmin(Request $request, string $nip) {
 
         if(auth()->guard('admin')->user()->nip == $nip) {
             $request->session()->flash('failed', 'Proses gagal, Anda tidak dapat menghapus akun anda sendiri');
@@ -202,7 +202,7 @@ class AdminController extends Controller
         $filename = 'data_participant';
         $filename_script = getContentScript(true, $filename);
 
-        $data = Auth::guard('admin')->user();  
+        $data = Auth::guard('admin')->user();
         $dataParticipants = Participant::get();
         return view('admin-page.'.$filename, [
             'candidate' => '',
@@ -214,11 +214,11 @@ class AdminController extends Controller
     }
 
     function resetPassword(Request $request, string $nip) {
-        
+
         $password = Hash::make($request->password);
 
         $result = Participant::where('nip', $nip)->update(['password'=>$password]);
-        
+
         if($result) {
             $request->session()->flash('success', 'Password baru berhasil disimpan');
         } else {
@@ -226,5 +226,5 @@ class AdminController extends Controller
         }
         return redirect('/detail-participant/'.$nip);
     }
-    
+
 }

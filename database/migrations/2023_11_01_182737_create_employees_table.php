@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('email', 100)->unique('users_email_unique');
             $table->string('password');
             $table->enum('is_active', ["Y", "N"])->default('Y');
+            $table->enum('deleted', ["Y", "N"])->default('N');
             $table->dateTime('created_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('created_by', 50)->nullable();
             $table->dateTime('updated_at')->nullable();
